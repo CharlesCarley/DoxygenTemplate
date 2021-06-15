@@ -1,6 +1,58 @@
+# -----------------------------------------------------------------------------
+#
+#   Copyright (c) Charles Carley.
+#
+#   This software is provided 'as-is', without any express or implied
+# warranty. In no event will the authors be held liable for any damages
+# arising from the use of this software.
+#
+#   Permission is granted to anyone to use this software for any purpose,
+# including commercial applications, and to alter it and redistribute it
+# freely, subject to the following restrictions:
+#
+# 1. The origin of this software must not be misrepresented; you must not
+#    claim that you wrote the original software. If you use this software
+#    in a product, an acknowledgment in the product documentation would be
+#    appreciated but is not required.
+# 2. Altered source versions must be plainly marked as such, and must not be
+#    misrepresented as being the original software.
+# 3. This notice may not be removed or altered from any source distribution.
+# ------------------------------------------------------------------------------
 include(FindDoxygen)
 
+
+# expects configuration parameters
+# Docs_ProjectName    | STRING
+# Docs_ProjectVersion | INT
+# Docs_SourceLocation | DIRECTORY_LIST
+# Docs_SourceExclude  | DIRECTORY_LIST
+# Docs_SymbolExclude  | STRING_LIST
+# Docs_GenGraphs      | BOOL
+# Docs_GenGraphsDot   | BOOL
+
 if (DOXYGEN_FOUND)
+
+	macro(MakeQuotedStringList OUT)
+		set(${OUT} )
+		set(WhiteSpace "                         ")
+		foreach(str ${ARGN})
+			set(${OUT} "${${OUT}}\"${str}\"\\\n${WhiteSpace}")
+		endforeach()
+	endmacro(MakeQuotedStringList)
+
+	macro(MakeStringList OUT)
+		set(${OUT} )
+		set(WhiteSpace "                         ")
+		foreach(str ${ARGN})
+			set(${OUT} "${${OUT}}${str}\\\n${WhiteSpace}")
+		endforeach()
+	endmacro(MakeStringList)
+
+
+	if (NOT EXISTS "${CMAKE_SOURCE_DIR}/docs")
+		file(MAKE_DIRECTORY "${CMAKE_SOURCE_DIR}/docs")
+	endif()
+
 	set(TargetName Documentation)
 
 	set(Input_CFG	 ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.txt.in)
@@ -8,6 +60,31 @@ if (DOXYGEN_FOUND)
 	set(Layout_CFG	 ${CMAKE_CURRENT_SOURCE_DIR}/Layout.xml)
 	set(Output_MAIN	 ${CMAKE_SOURCE_DIR}/docs/index.html)
 
+
+
+
+
+	MakeQuotedStringList(Docs_SourceLocation ${Docs_SourceLocation})
+	MakeQuotedStringList(Docs_SourceExclude  ${Docs_SourceExclude})
+	MakeStringList(Docs_SymbolExclude  ${Docs_SymbolExclude})
+
+
+	if (Docs_GenGraphs)
+		unset(Docs_GenGraphs)
+		set(Docs_GenGraphs "YES")
+	else()
+		set(Docs_GenGraphs "NO")
+	endif()
+
+	if (Docs_GenGraphsDot)
+		unset(Docs_GenGraphs)
+		unset(Docs_GenGraphsDot)
+		set(Docs_GenGraphs "YES")
+		set(Docs_GenGraphsDot "YES")
+	else()
+		set(Docs_GenGraphsDot "NO")
+	endif()
+	
 	set_source_files_properties(${Output_MAIN} PROPERTIES GENERATED TRUE)
 
 	set(Target_SRC
