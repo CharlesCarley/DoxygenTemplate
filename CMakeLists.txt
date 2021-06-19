@@ -44,7 +44,7 @@ if (DOXYGEN_FOUND)
 		set(${OUT} )
 		set(WhiteSpace "                         ")
 		foreach(str ${ARGN})
-			set(${OUT} "${${OUT}}${str}\\\n${WhiteSpace}")
+			set(${OUT} "${${OUT}}${str} \\\n${WhiteSpace}")
 		endforeach()
 	endmacro(MakeStringList)
 
