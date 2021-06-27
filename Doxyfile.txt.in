@@ -62,14 +62,14 @@ LOOKUP_CACHE_SIZE      = 0
 # Build related configuration options
 #---------------------------------------------------------------------------
 EXTRACT_ALL            = YES
-EXTRACT_PRIVATE        = YES
+EXTRACT_PRIVATE        = NO
 EXTRACT_PACKAGE        = YES
 EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = YES
-EXTRACT_ANON_NSPACES   = YES
-HIDE_UNDOC_MEMBERS     = NO
-HIDE_UNDOC_CLASSES     = NO
+EXTRACT_ANON_NSPACES   = NO
+HIDE_UNDOC_MEMBERS     = YES
+HIDE_UNDOC_CLASSES     = YES
 HIDE_FRIEND_COMPOUNDS  = YES
 HIDE_IN_BODY_DOCS      = NO
 INTERNAL_DOCS          = YES
@@ -121,7 +121,8 @@ FILE_PATTERNS          = *.cpp \
 RECURSIVE              = YES
 EXCLUDE                = ${Docs_SourceExclude}
 EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       = Test
+EXCLUDE_PATTERNS       = Test \
+                         ${Docs_SymbolExclude}
 EXCLUDE_SYMBOLS        = ${Docs_SymbolExclude}
 EXAMPLE_PATH           = "${CMAKE_CURRENT_SOURCE_DIR}/Source/Images"
 EXAMPLE_PATTERNS       = *.cpp \
@@ -133,7 +134,7 @@ IMAGE_PATH             = "${CMAKE_CURRENT_SOURCE_DIR}/Images/"
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 
 FILTER_SOURCE_FILES    = YES
-FILTER_SOURCE_PATTERNS = SK_INLINE
+FILTER_SOURCE_PATTERNS =
 USE_MDFILE_AS_MAINPAGE = 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
