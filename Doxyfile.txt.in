@@ -117,6 +117,7 @@ INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.cpp \
                          *.h \
                          *.inl \
+                         *.dot \
                          *.md
 RECURSIVE              = YES
 EXCLUDE                = ${Docs_SourceExclude}
@@ -328,7 +329,7 @@ DIRECTORY_GRAPH        = YES
 DOT_IMAGE_FORMAT       = svg
 INTERACTIVE_SVG        = YES
 DOT_PATH               = 
-DOTFILE_DIRS           = 
+DOTFILE_DIRS           = ${Docs_SourceLocation}
 MSCFILE_DIRS           = 
 DIAFILE_DIRS           = 
 PLANTUML_JAR_PATH      = 
