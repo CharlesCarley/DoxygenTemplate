@@ -27,11 +27,12 @@ include(FindDoxygen)
 # Docs_SourceLocation | DIRECTORY_LIST
 # Docs_SourceExclude  | DIRECTORY_LIST
 # Docs_SymbolExclude  | STRING_LIST
+# Docs_ExamplePaths   | STRING_LIST
+# Docs_ImagePaths     | STRING_LIST
 # Docs_GenGraphs      | BOOL
 # Docs_GenGraphsDot   | BOOL
 
 if (DOXYGEN_FOUND)
-
 	macro(MakeQuotedStringList OUT)
 		set(${OUT} )
 		set(WhiteSpace "                         ")
@@ -60,15 +61,12 @@ if (DOXYGEN_FOUND)
 	set(Layout_CFG	 ${CMAKE_CURRENT_SOURCE_DIR}/Layout.xml)
 	set(Output_MAIN	 ${CMAKE_SOURCE_DIR}/docs/index.html)
 
-
-
-
-
 	MakeQuotedStringList(Docs_SourceLocation ${Docs_SourceLocation})
 	MakeQuotedStringList(Docs_SourceExclude  ${Docs_SourceExclude})
-	MakeStringList(Docs_SymbolExclude  ${Docs_SymbolExclude})
-
-
+	MakeStringList(Docs_SymbolExclude        ${Docs_SymbolExclude})
+	MakeQuotedStringList(Docs_ExamplePaths   ${Docs_ExamplePaths})
+	MakeQuotedStringList(Docs_ImagePaths     ${Docs_ImagePaths})
+	
 	if (Docs_GenGraphs)
 		unset(Docs_GenGraphs)
 		set(Docs_GenGraphs "YES")
@@ -103,11 +101,8 @@ if (DOXYGEN_FOUND)
 		Source/License.inl
 	)
 
-
 	source_group("Source"    FILES ${Input_SRC})
 	source_group("Resource"  FILES ${Target_SRC})
-
-
 
 	configure_file(${Input_CFG} ${Output_CFG})
 
@@ -117,16 +112,15 @@ if (DOXYGEN_FOUND)
 		COMMENT "Building Documentation" 
 		SOURCES ${Target_SRC} ${Input_SRC}
 		)
+
+
 	add_custom_command(
 		TARGET ${TargetName}
 		POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/navtree.css"
 		 "${CMAKE_SOURCE_DIR}/docs/navtree.css"
 	)
-
-
 	set_target_properties(${TargetName} PROPERTIES FOLDER "CMakePredefinedTargets")
-
 else()
 	message("DOXYGEN not found")
 endif()

@@ -125,13 +125,13 @@ EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = Test \
                          ${Docs_SymbolExclude}
 EXCLUDE_SYMBOLS        = ${Docs_SymbolExclude}
-EXAMPLE_PATH           = "${CMAKE_CURRENT_SOURCE_DIR}/Source/Images"
+EXAMPLE_PATH           = ${Docs_ExamplePaths}
 EXAMPLE_PATTERNS       = *.cpp \
                          *.h \
                          *.html \
                          *.inl
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = "${CMAKE_CURRENT_SOURCE_DIR}/Images/"
+IMAGE_PATH             = ${Docs_ImagePaths}
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 
 FILTER_SOURCE_FILES    = YES
