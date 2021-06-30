@@ -85,26 +85,52 @@ if (DOXYGEN_FOUND)
 	
 	set_source_files_properties(${Output_MAIN} PROPERTIES GENERATED TRUE)
 
-	set(Target_SRC
+
+	set(Target_HTML
 		header.html
 		footer.html
 		dox.css
 		navtree.css
-		style.css
-		${Input_CFG}
-		${Output_CFG}
-		${Layout_CFG}		
-		${Output_MAIN}
+		style.css	
 	)
-	set(Input_SRC
-		Source/MainPage.inl
-		Source/License.inl
-	)
+	
 
-	source_group("Source"    FILES ${Input_SRC})
-	source_group("Resource"  FILES ${Target_SRC})
+
+	# This is meant to be embedded into another project
+	# RootProject
+	#  -- Documentation
+	#    -- Extern -> This CMakeLists.txt
+	#  -- Source
+	#  -- Images
+	# 
+
+	file(GLOB Input_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../Source/*.inl)
+	file(GLOB Image_SRC   
+			"${CMAKE_CURRENT_SOURCE_DIR}/../Images/*.png"
+			"${CMAKE_CURRENT_SOURCE_DIR}/../Images/*.jpg"
+			"${CMAKE_CURRENT_SOURCE_DIR}/../Images/*.svg"
+			"${CMAKE_CURRENT_SOURCE_DIR}/../Images/*.dot"
+			)
 
 	configure_file(${Input_CFG} ${Output_CFG})
+
+	set(Target_SRC
+		${Target_HTML}
+		${Layout_CFG}
+		${Input_CFG}
+		${Output_CFG}
+		${Output_MAIN}
+		${Input_SRC}
+		${Image_SRC}
+	)
+
+	
+	if (MSVC)
+		source_group("HTML"   FILES ${Target_HTML} ${Layout_CFG})
+		source_group("Config"    FILES ${Input_CFG}   ${Output_CFG})
+		source_group("Source"    FILES ${Input_SRC})
+		source_group("Resources" FILES ${Image_SRC})
+	endif()
 
 	add_custom_target(${TargetName}
 		COMMAND ${DOXYGEN_EXECUTABLE} ${Output_CFG}
