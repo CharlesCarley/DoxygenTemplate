@@ -1,3 +1,5 @@
 # DoxygenTemplate
 
-This repo contains the files that should be included in a project so that the documentation theme/look and feel can be kept consistent. 
+This repository contains common Doxygen template files. 
+
+Its purpose is to keep any doxygen look & feel consistent across multiple repositories. 
